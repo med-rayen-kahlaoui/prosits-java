@@ -1,3 +1,5 @@
+package tn.esprit.gestionzoo.entities;
+
 public class Animal {
     private String family;
     private String name;
@@ -5,13 +7,14 @@ public class Animal {
     private boolean isMammal;
 
     public Animal() {
+        this("Inconnue", "Inconnu", 0, false);
     }
 
     public Animal(String family, String name, int age, boolean isMammal) {
-        this.family = family;
-        this.name = name;
-        this.age = age;
-        this.isMammal = isMammal;
+        setFamily(family);
+        setName(name);
+        setAge(age);
+        setMammal(isMammal);
     }
 
     public String getFamily() {
@@ -27,7 +30,10 @@ public class Animal {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Donnez un nom a l'animal avant de l'ajouter.");
+        }
+        this.name = name.trim();
     }
 
     public int getAge() {
@@ -35,6 +41,9 @@ public class Animal {
     }
 
     public void setAge(int age) {
+        if (age < 0) {
+            throw new IllegalArgumentException("L'age de l'animal ne peut pas etre negatif.");
+        }
         this.age = age;
     }
 
@@ -48,11 +57,8 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Animal{" +
-                "family='" + family + '\'' +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", isMammal=" + isMammal +
-                '}';
+        return name + " (famille : " + family +
+                ", age : " + age +
+                ", mammifere : " + isMammal + ")";
     }
 }
